@@ -11,3 +11,4 @@ public class PricingServiceApplication {
 	}
 
 }
+//TODO Convert the Pricing Service to a microservice, registered on a Eureka server. Also, add an additional test for the microservice.
