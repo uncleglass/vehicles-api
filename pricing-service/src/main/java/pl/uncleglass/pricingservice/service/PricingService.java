@@ -7,6 +7,7 @@ import pl.uncleglass.pricingservice.domain.Price;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -47,6 +48,10 @@ public class PricingService {
     private static BigDecimal randomPrice() {
         return new BigDecimal(ThreadLocalRandom.current().nextDouble(1, 5))
                 .multiply(new BigDecimal(5000d)).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public static Collection<Price> getPrices() {
+        return PRICES.values();
     }
 
 }
