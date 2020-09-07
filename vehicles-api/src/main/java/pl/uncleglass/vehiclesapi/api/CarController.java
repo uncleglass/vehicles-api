@@ -53,7 +53,7 @@ class CarController {
     CollectionModel<EntityModel<Car>> list() {
         List<EntityModel<Car>> resources = carService.list().stream().map(assembler::toModel)
                 .collect(Collectors.toList());
-        return new CollectionModel<>(resources,
+        return  CollectionModel.of(resources,
                 linkTo(methodOn(CarController.class).list()).withSelfRel());
     }
 
