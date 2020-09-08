@@ -1,6 +1,5 @@
 package pl.uncleglass.pricingservice.domain;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
@@ -8,7 +7,6 @@ import java.math.BigDecimal;
 /**
  * Represents the price of a given vehicle, including currency.
  */
-@Entity
 public class Price {
 
     @Id

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import pl.uncleglass.pricingservice.domain.Price;
 import pl.uncleglass.pricingservice.service.PriceException;
-import pl.uncleglass.pricingservice.service.PriceService;
 import pl.uncleglass.pricingservice.service.PricingService;
 
 /**
@@ -18,12 +17,6 @@ import pl.uncleglass.pricingservice.service.PricingService;
 @RestController
 @RequestMapping("/services/price")
 public class PricingController {
-    private final PriceService priceService;
-
-    public PricingController(PriceService priceService) {
-        this.priceService = priceService;
-    }
-
     /**
      * Gets the price for a requested vehicle.
      * @param vehicleId ID number of the vehicle for which the price is requested
@@ -32,7 +25,7 @@ public class PricingController {
     @GetMapping
     public Price get(@RequestParam Long vehicleId) {
         try {
-            return priceService.getPriceByCarId(vehicleId);
+            return PricingService.getPrice(vehicleId);
         } catch (PriceException ex) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Price Not Found", ex);
