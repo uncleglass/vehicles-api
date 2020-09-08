@@ -65,12 +65,8 @@ class CarController {
      */
     @GetMapping("/{id}")
     EntityModel<Car> get(@PathVariable Long id) {
-        /**
-         * TODO: Use the `findById` method from the Car Service to get car information.
-         * TODO: Use the `assembler` on that car and return the resulting output.
-         *   Update the first line as part of the above implementing.
-         */
-        return assembler.toModel(new Car());
+        Car car = carService.findById(id);
+        return assembler.toModel(car);
     }
 
     /**
