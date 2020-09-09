@@ -19,18 +19,23 @@ public class PriceClient {
     public PriceClient(@Qualifier("client") WebClient.Builder client) {
         this.client = client;
     }
+
     /**
      * Gets a vehicle price from the pricing client, given vehicle ID.
+     *
      * @param vehicleId ID number of the vehicle for which to get the price
      * @return Currency and price of the requested vehicle,
-     *   error message that the vehicle ID is invalid, or note that the
-     *   service is down.
+     * error message that the vehicle ID is invalid, or note that the
+     * service is down.
      */
     public String getPrice(Long vehicleId) {
         try {
             Price price = client.build()
                     .get()
-                    .uri("http://pricing-service/services/price?vehicleId="+vehicleId)
+                    .uri("http://pricing-service/services/price", uriBuilder -> uriBuilder
+                            .queryParam("vehicleId", vehicleId)
+                            .build()
+                    )
                     .retrieve()
                     .bodyToMono(Price.class)
                     .block();
