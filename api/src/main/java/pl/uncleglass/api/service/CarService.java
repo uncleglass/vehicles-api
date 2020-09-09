@@ -1,6 +1,7 @@
 package pl.uncleglass.api.service;
 
 import org.springframework.stereotype.Service;
+import pl.uncleglass.api.client.prices.PriceClient;
 import pl.uncleglass.api.domain.car.Car;
 import pl.uncleglass.api.domain.car.CarRepository;
 
@@ -13,15 +14,16 @@ import java.util.List;
  */
 @Service
 public class CarService {
-
     private final CarRepository carRepository;
+    private final PriceClient priceClient;
 
-    public CarService(CarRepository carRepository) {
+    public CarService(CarRepository carRepository, PriceClient priceClient) {
         /**
          * TODO: Add the Maps and Pricing Web Clients you create
          *   in `VehiclesApiApplication` as arguments and set them here.
          */
         this.carRepository = carRepository;
+        this.priceClient = priceClient;
     }
 
     /**
@@ -41,10 +43,9 @@ public class CarService {
         Car car = carRepository.findById(id)
                 .orElseThrow(CarNotFoundException::new);
 
+        String price = priceClient.getPrice(id);
+        car.setPrice(price);
         /**
-         * TODO: Use the Pricing Web client you create in `VehiclesApiApplication`
-         *   to get the price based on the `id` input'
-         * TODO: Set the price of the car
          * Note: The car class file uses @transient, meaning you will need to call
          *   the pricing service each time to get the price.
          */
