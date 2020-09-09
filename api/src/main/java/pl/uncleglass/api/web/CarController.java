@@ -40,7 +40,7 @@ public class CarController {
     CollectionModel<EntityModel<Car>> list() {
         List<EntityModel<Car>> resources = carService.list().stream().map(assembler::toModel)
                 .collect(Collectors.toList());
-        return  CollectionModel.of(resources,
+        return CollectionModel.of(resources,
                 linkTo(methodOn(CarController.class).list()).withSelfRel());
     }
 
@@ -65,17 +65,13 @@ public class CarController {
      */
     @PostMapping
     ResponseEntity<?> post(@Valid @RequestBody Car car) throws URISyntaxException {
-        /**
-         * TODO: Use the `save` method from the Car Service to save the input car.
-         * TODO: Use the `assembler` on that saved car and return as part of the response.
-         *   Update the first line as part of the above implementing.
-         */
-        EntityModel<Car> resource = assembler.toModel(new Car());
+        Car savedCar = carService.save(car);
+        EntityModel<Car> resource = assembler.toModel(savedCar);
         Optional<Link> link = resource.getLink(IanaLinkRelations.SELF);
 
-        return ResponseEntity.created(new URI(
-                link.get().getHref()
-        )).body(resource);
+        return ResponseEntity
+                .created(new URI(link.get().getHref()))
+                .body(resource);
     }
 
     /**
