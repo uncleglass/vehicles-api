@@ -1,7 +1,9 @@
 package pl.uncleglass.api.service;
 
 import org.springframework.stereotype.Service;
+import pl.uncleglass.api.client.maps.MapsClient;
 import pl.uncleglass.api.client.prices.PriceClient;
+import pl.uncleglass.api.domain.Location;
 import pl.uncleglass.api.domain.car.Car;
 import pl.uncleglass.api.domain.car.CarRepository;
 
@@ -16,14 +18,14 @@ import java.util.List;
 public class CarService {
     private final CarRepository carRepository;
     private final PriceClient priceClient;
+    private final MapsClient mapsClient;
 
-    public CarService(CarRepository carRepository, PriceClient priceClient) {
-        /**
-         * TODO: Add the Maps and Pricing Web Clients you create
-         *   in `VehiclesApiApplication` as arguments and set them here.
-         */
+    public CarService(CarRepository carRepository,
+                      PriceClient priceClient,
+                      MapsClient mapsClient) {
         this.carRepository = carRepository;
         this.priceClient = priceClient;
+        this.mapsClient = mapsClient;
     }
 
     /**
@@ -59,7 +61,9 @@ public class CarService {
          * Note: The Location class file also uses @transient for the address,
          * meaning the Maps service needs to be called each time for the address.
          */
-
+        Location location = car.getLocation();
+        Location address = mapsClient.getAddress(location);
+        car.setLocation(address);
 
         return car;
     }

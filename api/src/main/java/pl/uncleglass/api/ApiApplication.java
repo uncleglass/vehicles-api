@@ -1,5 +1,6 @@
 package pl.uncleglass.api;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -67,10 +68,10 @@ public class ApiApplication {
 		};
 	}
 
-//	@Bean
-//	public ModelMapper modelMapper() {
-//		return new ModelMapper();
-//	}
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 //
 //	/**
 //	 * Web Client for the maps (location) API
@@ -78,6 +79,7 @@ public class ApiApplication {
 //	 * @return created maps endpoint
 //	 */
 //	@Bean(name="maps")
+//	@LoadBalanced
 //	public WebClient webClientMaps(@Value("${maps.endpoint}") String endpoint) {
 //		return WebClient.create(endpoint);
 //	}
