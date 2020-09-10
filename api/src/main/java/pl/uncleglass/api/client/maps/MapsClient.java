@@ -39,7 +39,10 @@ public class MapsClient {
         try {
             Address address = client.build()
                     .get()
-                    .uri("http://boogle-maps-service/maps/", uriBuilder -> uriBuilder
+                    .uri(uriBuilder -> uriBuilder
+                            .scheme("http")
+                            .host("boogle-maps-service")
+                            .path("maps/")
                             .queryParam("lat", location.getLat())
                             .queryParam("lon", location.getLon())
                             .build()
